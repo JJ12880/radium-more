@@ -1242,7 +1242,7 @@ bool AcceptToMemoryPoolWorker(CTxMemPool& pool, CValidationState& state, const C
     if (pfMissingInputs)
         *pfMissingInputs = false;
     int dust_tx_count = 0;
-    CAmount min_dust == 0.001;
+    CAmount min_dust = 0.001;
 
     BOOST_FOREACH (const CTxOut& txout, tx.vout) {
         LogPrintf("tx_out value %d, minimum value %d dust count %d", txout.nValue, min_dust, dust_tx_count);
