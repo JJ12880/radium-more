@@ -1242,13 +1242,14 @@ bool AcceptToMemoryPoolWorker(CTxMemPool& pool, CValidationState& state, const C
     if (pfMissingInputs)
         *pfMissingInputs = false;
     int dust_tx_count = 0;
+    CAmount min_dust == 0.001;
 
     BOOST_FOREACH (const CTxOut& txout, tx.vout) {
-        CAmount min_dust = 0.001;
+        LogPrintf("tx_out value %d, minimum value %d dust count %d", txout.nValue, min_dust, dust_tx_count);
         if (txout.nValue < min_dust)
-            dust_tx_count += 1;
+            dust_tx_count = dust_tx_count + 1;
         if (dust_tx_count > 5)
-            return state.DoS(0, error("AcceptToMemPool(): To Many dust transactions!"));
+            return state.DoS(0, false, REJECT_DUST, "too many dust vouts");
 
     }
 
